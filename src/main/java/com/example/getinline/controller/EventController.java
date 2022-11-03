@@ -14,7 +14,7 @@ public class EventController {
         return "event/index";
     }
 
-    @GetMapping("{eventId}")
+    @GetMapping("/{eventId}")
     public String eventDetail(@PathVariable Integer eventId) {
         return "event/detail";
     }
