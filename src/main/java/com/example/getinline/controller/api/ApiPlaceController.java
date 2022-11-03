@@ -20,7 +20,7 @@ public class ApiPlaceController {
 
     @GetMapping("/places/{placeId}")
     public String getPlace(@PathVariable Integer placeId) {
-        return "event " + placeId;
+        return "place " + placeId;
     }
 
     @PutMapping("/places/{placeId}")
