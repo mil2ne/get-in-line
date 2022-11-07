@@ -12,7 +12,7 @@ public class ApiDataResponse extends ApiErrorResponse {
     private final Object data;
 
 
-    protected ApiDataResponse(Boolean success, Integer errorCode, String message, Object data) {
+    private ApiDataResponse(Boolean success, Integer errorCode, String message, Object data) {
         super(success, errorCode, message);
         this.data = data;
     }
