@@ -1,5 +1,8 @@
 package com.example.getinline.controller.api;
 
+import com.example.getinline.constant.PlaceType;
+import com.example.getinline.dto.ApiDataResponse;
+import com.example.getinline.dto.PlaceDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,8 +12,15 @@ import java.util.List;
 public class ApiPlaceController {
 
     @GetMapping("/places")
-    public List<String> getPlaces() {
-        return List.of("place1", "place2");
+    public ApiDataResponse<List<PlaceDTO>> getPlaces() {
+        return ApiDataResponse.of(List.of(PlaceDTO.of(
+                PlaceType.COMMON,
+                "밀리배드민턴장",
+                "서울시 강남구 청담대로 1234",
+                "010-1234-5678",
+                30,
+                "신장개업"
+        )));
     }
 
     @PostMapping("/places")
@@ -19,8 +29,20 @@ public class ApiPlaceController {
     }
 
     @GetMapping("/places/{placeId}")
-    public String getPlace(@PathVariable Integer placeId) {
-        return "place " + placeId;
+    public ApiDataResponse<PlaceDTO> getPlace(@PathVariable Integer placeId) {
+        if (placeId.equals(2)) {
+            return ApiDataResponse.of(null);
+        }
+
+
+        return ApiDataResponse.of(PlaceDTO.of(
+                PlaceType.COMMON,
+                "밀리배드민턴장",
+                "서울시 강남구 청담대로 1234",
+                "010-1234-5678",
+                30,
+                "신장개업"
+        ));
     }
 
     @PutMapping("/places/{placeId}")
