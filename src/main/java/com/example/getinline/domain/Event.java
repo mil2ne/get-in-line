@@ -12,10 +12,10 @@ public class Event {
 
     private Long placeId;
     private String eventName;
+    private EventStatus eventStatus;
     private LocalDateTime eventStartDateTime;
     private LocalDateTime eventEndDateTime;
     private Integer currentNumberOfPeople;
-    private EventStatus eventStatus;
     private Integer capacity;
     private String memo;
 
