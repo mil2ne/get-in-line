@@ -267,6 +267,7 @@ class ApiEventControllerTest {
     private EventDTO createEventDTO() {
         return EventDTO.of(
                 1L,
+                1L,
                 "오후 운동",
                 EventStatus.OPENED,
                 LocalDateTime.of(2021,1,1,13,0,0),
