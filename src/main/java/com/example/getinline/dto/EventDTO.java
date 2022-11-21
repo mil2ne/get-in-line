@@ -6,6 +6,7 @@ import com.example.getinline.constant.PlaceType;
 import java.time.LocalDateTime;
 
 public record EventDTO(
+        Long id,
         Long placeId,
         String eventName,
         EventStatus eventStatus,
@@ -19,6 +20,7 @@ public record EventDTO(
 
 ) {
     public static EventDTO of (
+            Long id,
             Long placeId,
             String eventName,
             EventStatus eventStatus,
@@ -31,6 +33,7 @@ public record EventDTO(
             LocalDateTime modifiedAt
     ) {
         return new EventDTO(
+                id,
                 placeId, eventName,eventStatus,
                 eventStartDateTime, eventEndDateTime,
                 currentNumberOfPeople,
