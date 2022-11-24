@@ -12,6 +12,9 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+### querydsl
+/src/main/generated
+
 # AWS User-specific
 .idea/**/aws.xml
 

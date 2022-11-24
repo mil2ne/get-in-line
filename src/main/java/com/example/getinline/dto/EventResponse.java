@@ -40,8 +40,8 @@ public record EventResponse(
                 eventDTO.placeId(),
                 eventDTO.eventName(),
                 eventDTO.eventStatus(),
-                eventDTO.eventStartDateTime(),
-                eventDTO.eventEndDateTime(),
+                eventDTO.eventStartDatetime(),
+                eventDTO.eventEndDatetime(),
                 eventDTO.currentNumberOfPeople(),
                 eventDTO.capacity(),
                 eventDTO.memo()
