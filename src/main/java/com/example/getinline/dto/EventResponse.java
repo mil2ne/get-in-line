@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public record EventResponse(
         Long id,
-        Long placeId,
+        PlaceDto place,
         String eventName,
         EventStatus eventStatus,
         LocalDateTime eventStartDateTime,
@@ -18,7 +18,7 @@ public record EventResponse(
 ) {
     public static EventResponse of (
             Long id,
-            Long placeId,
+            PlaceDto place,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDateTime,
@@ -28,16 +28,16 @@ public record EventResponse(
             String memo
     ) {
         return new EventResponse(
-                id,placeId, eventName,
+                id,place, eventName,
                 eventStatus, eventStartDateTime,
                 eventEndDateTime, currentNumberOfPeople, capacity, memo);
     }
 
-    public static EventResponse from(EventDTO eventDTO) {
+    public static EventResponse from(EventDto eventDTO) {
         if (eventDTO == null) {return null;}
         return EventResponse.of(
                 eventDTO.id(),
-                eventDTO.placeId(),
+                eventDTO.placeDto(),
                 eventDTO.eventName(),
                 eventDTO.eventStatus(),
                 eventDTO.eventStartDatetime(),

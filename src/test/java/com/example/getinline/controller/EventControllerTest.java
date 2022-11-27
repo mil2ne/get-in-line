@@ -1,7 +1,6 @@
 package com.example.getinline.controller;
 
-import com.example.getinline.domain.Event;
-import com.example.getinline.dto.EventDTO;
+import com.example.getinline.dto.EventDto;
 import com.example.getinline.service.EventService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,7 +53,7 @@ class EventControllerTest {
         // Given
         long eventId = 1L;
         given(eventService.getEvent(eventId)).willReturn(Optional.of(
-                EventDTO.of(eventId, null, null, null, null, null, null, null, null, null, null)
+                EventDto.of(eventId, null, null, null, null, null, null, null, null, null, null)
         ));
 
         // When & Then
@@ -77,7 +76,7 @@ class EventControllerTest {
 
         // When & Then
         mvc.perform(get("/events/" + eventId))
-                .andExpect(status().isBadRequest()) // TODO: 나중에 404로 바꿔보자
+                .andExpect(status().isNotFound())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("error"));
 

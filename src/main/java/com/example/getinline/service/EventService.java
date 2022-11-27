@@ -1,13 +1,16 @@
 package com.example.getinline.service;
 
+import com.example.getinline.domain.Place;
+import com.example.getinline.repository.PlaceRepository;
 import com.querydsl.core.types.Predicate;
 import com.example.getinline.constant.ErrorCode;
 import com.example.getinline.constant.EventStatus;
-import com.example.getinline.dto.EventDTO;
+import com.example.getinline.dto.EventDto;
 import com.example.getinline.exception.GeneralException;
 import com.example.getinline.repository.EventRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,18 +22,19 @@ import java.util.stream.StreamSupport;
 public class EventService {
 
     private final EventRepository eventRepository;
+    private final PlaceRepository placeRepository;
 
-    public List<EventDTO> getEvents(Predicate predicate) {
+    public List<EventDto> getEvents(Predicate predicate) {
         try {
             return StreamSupport.stream(eventRepository.findAll(predicate).spliterator(), false)
-                    .map(EventDTO::of)
+                    .map(EventDto::of)
                     .toList();
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }
     }
 
-    public List<EventDTO> getEvents(
+    public List<EventDto> getEvents(
             Long placeId,
             String eventName,
             EventStatus eventStatus,
@@ -44,28 +48,32 @@ public class EventService {
         }
     }
 
-    public Optional<EventDTO> getEvent(Long eventId) {
+    public Optional<EventDto> getEvent(Long eventId) {
         try {
-            return eventRepository.findById(eventId).map(EventDTO::of);
+            return eventRepository.findById(eventId).map(EventDto::of);
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }
     }
 
-    public boolean createEvent(EventDTO eventDTO) {
+    @Transactional
+    public boolean createEvent(EventDto eventDTO) {
         try {
             if (eventDTO == null) {
                 return false;
             }
 
-            eventRepository.save(eventDTO.toEntity());
+            Place place = placeRepository.findById(eventDTO.placeDto().id())
+                    .orElseThrow(() -> new GeneralException(ErrorCode.NOT_FOUND));
+            eventRepository.save(eventDTO.toEntity(place));
+
             return true;
         } catch (Exception e) {
             throw new GeneralException(ErrorCode.DATA_ACCESS_ERROR, e);
         }
     }
 
-    public boolean modifyEvent(Long eventId, EventDTO dto) {
+    public boolean modifyEvent(Long eventId, EventDto dto) {
         try {
             if (eventId == null || dto == null) {
                 return false;
