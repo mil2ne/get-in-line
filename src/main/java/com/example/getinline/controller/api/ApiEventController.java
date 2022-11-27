@@ -17,6 +17,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Deprecated
 //@Validated
 @RequiredArgsConstructor
 //@RequestMapping("/api")

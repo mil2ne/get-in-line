@@ -5,6 +5,7 @@ import com.example.getinline.dto.ApiDataResponse;
 import com.example.getinline.dto.LoginRequest;
 import org.springframework.web.bind.annotation.*;
 
+@Deprecated
 //@RequestMapping("/api")
 //@RestController
 public class ApiAuthController {

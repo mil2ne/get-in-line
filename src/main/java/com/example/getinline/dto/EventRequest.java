@@ -35,10 +35,10 @@ public record EventRequest(
                 eventEndDateTime, currentNumberOfPeople, capacity, memo);
     }
 
-    public EventDTO toDTO() {
-        return EventDTO.of(
+    public EventDto toDTO() {
+        return EventDto.of(
                 null,
-                this.placeId,
+                null,
                 this.eventName,
                 this.eventStatus,
                 this.eventStartDateTime,

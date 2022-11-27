@@ -10,10 +10,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString
-@EqualsAndHashCode
 @Table(indexes = {
         @Index(columnList = "phoneNumber"),
         @Index(columnList = "createdAt"),
@@ -46,6 +48,11 @@ public class Admin {
     @Setter
     private String memo;
 
+    @ToString.Exclude
+    @OrderBy("id")
+    @OneToMany(mappedBy = "admin")
+    private final Set<AdminPlaceMap> adminPlaceMaps = new LinkedHashSet<>();
+
     @Column(nullable = false, insertable = false, updatable = false,
             columnDefinition = "datetime default CURRENT_TIMESTAMP")
     @CreatedDate
@@ -70,4 +77,15 @@ public class Admin {
         return new Admin(email, nickName, password, phoneNumber, memo);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        return id != null && id.equals(((Admin)obj).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, nickName, phoneNumber, createdAt, modifiedAt);
+    }
 }

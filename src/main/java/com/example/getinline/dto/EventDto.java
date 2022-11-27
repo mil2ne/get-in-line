@@ -2,12 +2,13 @@ package com.example.getinline.dto;
 
 import com.example.getinline.constant.EventStatus;
 import com.example.getinline.domain.Event;
+import com.example.getinline.domain.Place;
 
 import java.time.LocalDateTime;
 
-public record EventDTO(
+public record EventDto(
         Long id,
-        Long placeId,
+        PlaceDto placeDto,
         String eventName,
         EventStatus eventStatus,
         LocalDateTime eventStartDatetime,
@@ -19,9 +20,9 @@ public record EventDTO(
         LocalDateTime modifiedAt
 ) {
 
-    public static EventDTO of(
+    public static EventDto of(
             Long id,
-            Long placeId,
+            PlaceDto placeDto,
             String eventName,
             EventStatus eventStatus,
             LocalDateTime eventStartDatetime,
@@ -32,9 +33,9 @@ public record EventDTO(
             LocalDateTime createdAt,
             LocalDateTime modifiedAt
     ) {
-        return new EventDTO(
+        return new EventDto(
                 id,
-                placeId,
+                placeDto,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -47,10 +48,10 @@ public record EventDTO(
         );
     }
 
-    public static EventDTO of(Event event) {
-        return new EventDTO(
+    public static EventDto of(Event event) {
+        return new EventDto(
                 event.getId(),
-                event.getPlaceId(),
+                PlaceDto.of(event.getPlace()),
                 event.getEventName(),
                 event.getEventStatus(),
                 event.getEventStartDatetime(),
@@ -63,9 +64,9 @@ public record EventDTO(
         );
     }
 
-    public Event toEntity() {
+    public Event toEntity(Place place) {
         return Event.of(
-                placeId,
+                place,
                 eventName,
                 eventStatus,
                 eventStartDatetime,
@@ -77,7 +78,6 @@ public record EventDTO(
     }
 
     public Event updateEntity(Event event) {
-        if (placeId != null) { event.setPlaceId(placeId); }
         if (eventName != null) { event.setEventName(eventName); }
         if (eventStatus != null) { event.setEventStatus(eventStatus); }
         if (eventStartDatetime != null) { event.setEventStartDatetime(eventStartDatetime); }
